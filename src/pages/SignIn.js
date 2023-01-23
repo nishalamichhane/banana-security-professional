@@ -19,10 +19,10 @@ function SignIn() {
                 email: email,
                 password: password,
             });
-            // log het resultaat in de console
+            // log the result in the console
             console.log(result.data);
 
-            // geef de JWT token aan de login-functie van de context mee
+            // pass the JWT token to the login function of the context
             login(result.data.accessToken);
 
         } catch(e) {

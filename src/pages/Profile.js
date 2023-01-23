@@ -7,9 +7,9 @@ function Profile() {
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        // we halen de pagina-content op in de mounting-cycle
+        // we retrieve the page content in the mounting cycle
         async function fetchProfileData() {
-            // haal de token uit de Local Storage om in het GET-request te bewijzen dat we geauthoriseerd zijn
+            // retrieve the token from the Local Storage to prove in the GET request that we are authorized
             const token = localStorage.getItem('token');
 
             try {

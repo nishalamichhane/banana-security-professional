@@ -14,15 +14,15 @@ function AuthContextProvider ( { children }) {
   const navigate = useNavigate();
 //Mounting effect
   useEffect(() => {
-    // haal de JWT op uit Local Storage
+    // retrieve the JWT from Local Storage
     const token = localStorage.getItem('token');
 
-    // als er WEL een token is, haal dan opnieuw de gebruikersdata op
+    // if there is a token, get the user data again
     if (token) {
       const decoded = jwt_decode(token);
       fetchUserData(decoded.sub, token);
     } else {
-      // als er GEEN token is doen we niks, en zetten we de status op 'done'
+      // if there is NO token we do nothing, and set the status to 'done'
       toggleIsAuth({
         isAuth: false,
         user: null,
@@ -37,10 +37,10 @@ function AuthContextProvider ( { children }) {
     // navigate('/profile')
     // zet de token in de Local Storage
     localStorage.setItem('token', JWT);
-    // decode de token zodat we de ID van de gebruiker hebben en data kunnen ophalen voor de context
+    // decode the token so that we have the user's ID and can retrieve data for the context
     const decoded = jwt_decode(JWT);
 
-    // geef de ID, token en redirect-link mee aan de fetchUserData functie (staat hieronder)
+    // pass the ID, token and redirect link to the fetchUserData function (listed below)
     fetchUserData(decoded.sub, JWT, '/profile');
     // link de gebruiker door naar de profielpagina
     // history.push('/profile');
@@ -58,10 +58,10 @@ function AuthContextProvider ( { children }) {
     console.log('Gebruiker is uitgelogd!');
   }
 
-  // Omdat we deze functie in login- en het mounting-effect gebruiken, staat hij hier gedeclareerd!
+  // Since we use this function in login and mounting effect, it is declared here!
   async function fetchUserData(id, token, redirectUrl) {
     try {
-      // haal gebruikersdata op met de token en id van de gebruiker
+      // retrieve user data with the user's token and id
       const result = await axios.get(`http://localhost:3000/600/users/${id}`, {
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ function AuthContextProvider ( { children }) {
         },
       });
 
-      // zet de gegevens in de state
+      // put the data in the state
       toggleIsAuth({
         ...isAuth,
         isAuth: true,
@@ -81,15 +81,15 @@ function AuthContextProvider ( { children }) {
         status: 'done',
       });
 
-      // als er een redirect URL is meegegeven (bij het mount-effect doen we dit niet) linken we hiernnaartoe door
-      // als we de history.push in de login-functie zouden zetten, linken we al door voor de gebuiker is opgehaald!
+      // if a redirect URL has been provided (we do not do this with the mount effect) we will link to it
+
       if (redirectUrl) {
         navigate(redirectUrl);
       }
 
     } catch (e) {
       console.error(e);
-      // ging er iets mis? Plaatsen we geen data in de state
+      // did something go wrong? We do not place any data in the state
       toggleIsAuth({
         isAuth: false,
         user: null,

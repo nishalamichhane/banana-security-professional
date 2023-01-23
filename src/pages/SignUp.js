@@ -5,13 +5,13 @@ import React, { useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 function SignUp() {
-    //state voor het formulier
+    //state for the form
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    // state voor functionaliteit
+    // state for functionality
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
 
@@ -27,11 +27,11 @@ function SignUp() {
                 username: username,
             });
 
-            // Let op: omdat we geen axios Canceltoken gebruiken zul je hier een memory-leak melding krijgen.
-            // Om te zien hoe je een canceltoken implementeerd kun je de bonus-branch bekijken!
+            // Let op: because we don't use axios Canceltoken you will get a memory-leak message here..
+            // To see how to implement a cancel token, check out the bonus branch!
 
-            // als alles goed gegaan is, linken we dyoor naar de login-pagina
-           //history.push('/signin');
+            // if everything went well, we link dyoor to the login page
+
             navigate('/signin')
         } catch(e) {
             console.error(e);
